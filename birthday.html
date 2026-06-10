@@ -1,0 +1,375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+<title>Happy Birthday My Love 💖</title>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400;1,600&family=Lato:wght@300;400;700&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet"/>
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#FFF0F5;
+  --card:#fff7fa;
+  --rose:#E8748A;
+  --blush:#F7A8BB;
+  --gold:#F5A623;
+  --purple:#C47BA0;
+  --deep:#5C2D3A;
+  --text:#3D1A26;
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Lato',sans-serif;overflow-x:hidden;min-height:100vh}
+#hearts-canvas{position:fixed;top:0;left:0;width:100%;height:100%;pointer-events:none;z-index:0}
+
+/* ── HERO ── */
+.hero{
+  position:relative;min-height:100vh;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;text-align:center;padding:40px 20px;z-index:1;
+  background:radial-gradient(ellipse at 50% 0%,rgba(196,123,160,0.25) 0%,transparent 65%),
+             radial-gradient(ellipse at 80% 80%,rgba(247,168,187,0.2) 0%,transparent 60%);
+}
+.hero-date{font-size:.8rem;letter-spacing:.35em;text-transform:uppercase;color:var(--gold);margin-bottom:18px;opacity:0;animation:fadeUp .8s .3s forwards}
+.hero-sub{font-family:'Dancing Script',cursive;font-size:clamp(1.5rem,4vw,2.4rem);color:var(--rose);margin-bottom:10px;opacity:0;animation:fadeUp .8s .6s forwards}
+.hero-name{
+  font-family:'Playfair Display',serif;font-size:clamp(3rem,12vw,8rem);font-weight:700;line-height:1;
+  background:linear-gradient(135deg,var(--rose) 0%,#E84393 40%,var(--gold) 80%);
+  -webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;
+  margin-bottom:20px;opacity:0;animation:fadeUp 1s .9s forwards
+}
+.hero-name::after{content:'';display:block;width:80px;height:3px;background:linear-gradient(90deg,var(--rose),var(--gold));margin:16px auto 0;border-radius:2px}
+.hero-msg{font-size:clamp(1rem,2.5vw,1.2rem);font-weight:400;color:var(--deep);max-width:540px;line-height:1.8;opacity:0;animation:fadeUp .8s 1.2s forwards;margin-bottom:36px}
+.scroll-hint{opacity:0;animation:fadeUp .8s 1.8s forwards;display:flex;flex-direction:column;align-items:center;gap:8px;color:var(--rose);font-size:.8rem;letter-spacing:.2em;text-transform:uppercase}
+.scroll-hint .arrow{width:20px;height:20px;border-right:2px solid var(--rose);border-bottom:2px solid var(--rose);transform:rotate(45deg);animation:bounce 1.4s infinite}
+
+/* ── SECTIONS ── */
+section{position:relative;z-index:1;padding:70px 20px}
+.section-label{text-align:center;font-size:.72rem;letter-spacing:.4em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.section-title{text-align:center;font-family:'Playfair Display',serif;font-size:clamp(2rem,5vw,3rem);font-weight:700;color:var(--text);margin-bottom:44px}
+.section-title span{color:var(--rose);font-style:italic}
+
+/* ── GALLERY ── */
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(270px,1fr));gap:20px;max-width:1100px;margin:0 auto}
+.photo-card{background:var(--card);border:1px solid rgba(232,116,138,0.2);border-radius:18px;overflow:hidden;transition:transform .35s,box-shadow .35s,border-color .35s;cursor:pointer;box-shadow:0 4px 20px rgba(232,116,138,0.08)}
+.photo-card:hover{transform:translateY(-8px) scale(1.02);box-shadow:0 20px 50px rgba(196,123,160,0.25);border-color:var(--rose)}
+.photo-card.featured{grid-column:span 2}
+.photo-img{width:100%;height:320px;object-position:top center;display:block}
+.photo-card.featured .photo-img{height:420px}
+.photo-caption{padding:12px 16px;display:flex;align-items:center;justify-content:space-between;border-top:1px solid rgba(232,116,138,0.1)}
+.cap-text{font-family:'Dancing Script',cursive;font-size:1.1rem;color:var(--rose)}
+.cap-tag{font-size:.7rem;color:var(--gold);letter-spacing:.1em;background:rgba(245,166,35,0.12);padding:3px 10px;border-radius:20px;border:1px solid rgba(245,166,35,0.3)}
+.together-badge{border-color:rgba(232,116,138,0.35);background:linear-gradient(135deg,#fff5f8,#fff0f4)}
+
+/* ── SNAP ── */
+.snap-wrap{max-width:380px;margin:0 auto}
+.snap-feature{background:var(--card);border:2px solid rgba(232,116,138,0.35);border-radius:28px;overflow:hidden;box-shadow:0 0 50px rgba(196,123,160,0.2);transition:transform .4s}
+.snap-feature:hover{transform:scale(1.02)}
+.snap-top-bar{display:flex;align-items:center;gap:10px;padding:14px 18px;background:rgba(232,116,138,0.06);border-bottom:1px solid rgba(232,116,138,0.12)}
+.snap-avatar{width:36px;height:36px;border-radius:50%;background:linear-gradient(135deg,var(--rose),var(--gold));display:flex;align-items:center;justify-content:center;font-size:1.2rem}
+.snap-user{font-size:.85rem;font-weight:700;color:var(--text)}
+.snap-time{font-size:.7rem;color:rgba(60,26,38,0.5)}
+.snap-ghost{margin-left:auto;font-size:1.4rem}
+.snap-video{width:100%;display:block;border-radius:0}
+.snap-footer{padding:14px 18px;text-align:center}
+.snap-footer-text{font-family:'Dancing Script',cursive;font-size:1.3rem;color:var(--rose)}
+
+/* ── LETTER ── */
+.letter-wrap{max-width:680px;margin:0 auto;background:var(--card);border:1px solid rgba(232,116,138,0.25);border-radius:20px;padding:48px 44px;position:relative;overflow:hidden;box-shadow:0 8px 30px rgba(232,116,138,0.1)}
+.letter-wrap::before{content:'❝';position:absolute;top:10px;left:20px;font-size:5rem;color:rgba(232,116,138,0.1);font-family:'Playfair Display',serif;line-height:1}
+.letter-text{font-family:'Playfair Display',serif;font-size:clamp(1rem,2vw,1.15rem);font-style:italic;line-height:1.9;color:var(--deep);text-align:center;position:relative;z-index:1}
+.letter-sig{margin-top:28px;text-align:right;font-family:'Dancing Script',cursive;font-size:1.7rem;color:var(--rose)}
+
+/* ── REASONS ── */
+.reasons-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:18px;max-width:900px;margin:0 auto}
+.reason-card{background:var(--card);border:1px solid rgba(196,123,160,0.25);border-radius:14px;padding:24px 20px;text-align:center;transition:border-color .3s,transform .3s,box-shadow .3s;box-shadow:0 4px 16px rgba(196,123,160,0.08)}
+.reason-card:hover{border-color:var(--rose);transform:translateY(-5px);box-shadow:0 12px 30px rgba(232,116,138,0.18)}
+.reason-num{font-family:'Playfair Display',serif;font-size:2.2rem;font-weight:700;color:var(--gold);line-height:1;margin-bottom:10px}
+.reason-text{font-size:.95rem;color:var(--deep);line-height:1.6}
+
+/* ── BANNER ── */
+.banner{text-align:center;padding:80px 20px 100px;background:radial-gradient(ellipse at 50% 100%,rgba(196,123,160,0.2) 0%,transparent 65%);position:relative;z-index:1}
+.banner-stars{font-size:1.6rem;letter-spacing:.4em;margin-bottom:20px;color:var(--gold);animation:shimmer 2s infinite alternate}
+.banner-big{font-family:'Dancing Script',cursive;font-size:clamp(3rem,10vw,7rem);font-weight:700;background:linear-gradient(135deg,var(--rose),#E84393,var(--blush),var(--gold));background-size:200%;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:gradientShift 3s infinite alternate;line-height:1.1;margin-bottom:16px}
+.banner-year{font-size:1rem;letter-spacing:.5em;color:var(--purple);text-transform:uppercase;margin-bottom:32px}
+.banner-cakes{font-size:2.5rem;display:flex;justify-content:center;gap:12px;animation:bounce 1s infinite alternate}
+
+footer{text-align:center;padding:30px 20px;color:rgba(60,26,38,0.4);font-size:.78rem;letter-spacing:.15em;position:relative;z-index:1}
+footer span{color:var(--rose)}
+
+/* ── LIGHTBOX ── */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,0.9);z-index:1000;align-items:center;justify-content:center;cursor:zoom-out}
+.lightbox.open{display:flex}
+.lightbox img{max-width:92vw;max-height:90vh;object-fit:contain;border-radius:12px}
+.lb-close{position:absolute;top:20px;right:28px;font-size:2.2rem;color:#fff;cursor:pointer;line-height:1;z-index:1001}
+
+/* ── ANIMATIONS ── */
+@keyframes fadeUp{from{opacity:0;transform:translateY(28px)}to{opacity:1;transform:translateY(0)}}
+@keyframes bounce{from{transform:translateY(0)}to{transform:translateY(-8px)}}
+@keyframes shimmer{from{opacity:.6}to{opacity:1}}
+@keyframes gradientShift{from{background-position:0% 50%}to{background-position:100% 50%}}
+.reveal{opacity:0;transform:translateY(40px);transition:opacity .7s ease,transform .7s ease}
+.reveal.visible{opacity:1;transform:translateY(0)}
+
+@media(max-width:600px){
+  .photo-card.featured{grid-column:span 1}
+  .letter-wrap{padding:32px 22px}
+}
+</style>
+</head>
+<body>
+
+<canvas id="hearts-canvas"></canvas>
+
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+  <div class="hero-date">June 11 · A Day Made for You</div>
+  <div class="hero-sub">Happy Birthday My Love</div>
+  <h1 class="hero-name">Areech</h1>
+  <p class="hero-msg">Today the whole universe pauses just to celebrate the most beautiful soul it ever created — <em>you</em>. Every star, every heartbeat, every smile today is yours.</p>
+  <div class="scroll-hint">
+    <span>Scroll to explore our memories</span>
+    <div class="arrow"></div>
+  </div>
+</section>
+
+<!-- ══════════ GALLERY ══════════ -->
+<section>
+  <p class="section-label reveal">A Story of Us</p>
+  <h2 class="section-title reveal">Our <span>Moments</span> Together</h2>
+
+  <div class="gallery-grid">
+
+    <!-- PHOTO 5 – Together (lock screen, featured big) -->
+    <div class="photo-card together-badge featured reveal" onclick="openLightbox(this)">
+      <img class="photo-img" src="assets/photo5.jpeg" alt="Us together"/>
+      <div class="photo-caption">
+        <span class="cap-text">My lock screen 💑</span>
+        <span class="cap-tag">Together</span>
+      </div>
+    </div>
+
+    <!-- PHOTO 7 – Her solo (dupatta) -->
+    <div class="photo-card reveal" onclick="openLightbox(this)">
+      <img class="photo-img" src="assets/photo7.jpeg" alt="Beautiful"/>
+      <div class="photo-caption">
+        <span class="cap-text">So beautiful 🌸</span>
+        <span class="cap-tag">Her</span>
+      </div>
+    </div>
+
+    <!-- PHOTO 1 – Together (star filter) -->
+    <div class="photo-card together-badge reveal" onclick="openLightbox(this)">
+      <img class="photo-img" src="assets/photo1.jpeg" alt="Stargazing together"/>
+      <div class="photo-caption">
+        <span class="cap-text">Stargazing together 🌙</span>
+        <span class="cap-tag">Together</span>
+      </div>
+    </div>
+
+    <!-- PHOTO 6 – Her solo (black tshirt) -->
+    <div class="photo-card reveal" onclick="openLightbox(this)">
+      <img class="photo-img" src="assets/photo6.jpeg" alt="Cute"/>
+      <div class="photo-caption">
+        <span class="cap-text">Effortlessly cute ✨</span>
+        <span class="cap-tag">Her</span>
+      </div>
+    </div>
+
+    <!-- PHOTO 2 – Together (batman filter) -->
+    <div class="photo-card together-badge reveal" onclick="openLightbox(this)">
+      <img class="photo-img" src="assets/photo2.jpeg" alt="Batman"/>
+      <div class="photo-caption">
+        <span class="cap-text">Batman &amp; his girl 🦇💕</span>
+        <span class="cap-tag">Together</span>
+      </div>
+    </div>
+
+    <!-- PHOTO 8 – Her solo (sleepy) -->
+    <div class="photo-card reveal" onclick="openLightbox(this)">
+      <img class="photo-img" src="assets/photo8.jpeg" alt="Sleepy"/>
+      <div class="photo-caption">
+        <span class="cap-text">Even sleepy she glows 🌙</span>
+        <span class="cap-tag">Her</span>
+      </div>
+    </div>
+
+    <!-- PHOTO 3 – Together (butterfly filter) -->
+    <div class="photo-card together-badge reveal" onclick="openLightbox(this)">
+      <img class="photo-img" src="assets/photo3.jpeg" alt="Butterflies"/>
+      <div class="photo-caption">
+        <span class="cap-text">Butterflies with you 🦋</span>
+        <span class="cap-tag">Together</span>
+      </div>
+    </div>
+
+    <!-- PHOTO 4 – Together (Thursday) -->
+    <div class="photo-card together-badge reveal" onclick="openLightbox(this)">
+      <img class="photo-img" src="assets/photo4.jpeg" alt="Thursday"/>
+      <div class="photo-caption">
+        <span class="cap-text">Nothing, just us 💫</span>
+        <span class="cap-tag">Together</span>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ══════════ SNAP ══════════ -->
+<section>
+  <p class="section-label reveal">Captured Together</p>
+  <h2 class="section-title reveal">Our Special <span>Snap</span></h2>
+  <div class="snap-wrap reveal">
+    <div class="snap-feature">
+      <div class="snap-top-bar">
+        <div class="snap-avatar">💛</div>
+        <div>
+          <div class="snap-user">azel &amp; his love</div>
+          <div class="snap-time">June 11 · Birthday Snap 💛</div>
+        </div>
+        <div class="snap-ghost">👻</div>
+      </div>
+      <video class="snap-video" src="assets/snap.mp4" controls autoplay muted loop playsinline></video>
+      <div class="snap-footer">
+        <div class="snap-footer-text">Us 💛 Forever &amp; Always</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ LOVE LETTER ══════════ -->
+<section>
+  <p class="section-label reveal">From the Heart</p>
+  <h2 class="section-title reveal">A Little <span>Love Note</span></h2>
+  <div class="letter-wrap reveal">
+    <p class="letter-text">
+      From the very first moment I saw you, I knew you were different —
+      the kind of different that changes everything. You make ordinary days feel like
+      adventures and quiet moments feel like the most precious memories.<br/><br/>
+      On your birthday, I want you to know: you are not just loved, you are
+      <em>cherished</em>, <em>adored</em>, and endlessly appreciated. Every laugh we share,
+      every photo we take, every look you give me — it's all I ever need.<br/><br/>
+      I hope today is as magical as you are, my love. Here's to every birthday after this —
+      may I be lucky enough to celebrate every single one right by your side. 💖
+    </p>
+    <div class="letter-sig">— Yours, always 💕</div>
+  </div>
+</section>
+
+<!-- ══════════ REASONS ══════════ -->
+<section>
+  <p class="section-label reveal">Just Because</p>
+  <h2 class="section-title reveal">Reasons I <span>Love You</span></h2>
+  <div class="reasons-grid">
+    <div class="reason-card reveal">
+      <div class="reason-num">01</div>
+      <p class="reason-text">Your smile lights up every room you walk into</p>
+    </div>
+    <div class="reason-card reveal">
+      <div class="reason-num">02</div>
+      <p class="reason-text">The way you look cute even when you're just being yourself</p>
+    </div>
+    <div class="reason-card reveal">
+      <div class="reason-num">03</div>
+      <p class="reason-text">How kind your heart is, even when no one's watching</p>
+    </div>
+    <div class="reason-card reveal">
+      <div class="reason-num">04</div>
+      <p class="reason-text">Your strength — you handle everything with so much grace</p>
+    </div>
+    <div class="reason-card reveal">
+      <div class="reason-num">05</div>
+      <p class="reason-text">Every photo with you instantly becomes my favourite one</p>
+    </div>
+    <div class="reason-card reveal">
+      <div class="reason-num">06</div>
+      <p class="reason-text">Because being with you feels exactly like coming home 🏡</p>
+    </div>
+  </div>
+</section>
+
+<!-- ══════════ BIRTHDAY BANNER ══════════ -->
+<div class="banner">
+  <div class="banner-stars reveal">✦ ✦ ✦ ✦ ✦</div>
+  <div class="banner-big reveal">Happy Birthday!</div>
+  <div class="banner-year reveal">June 11 · 2025 · A Day All Yours</div>
+  <div class="banner-cakes reveal">🎂 🎉 🎈 💖 🥳</div>
+</div>
+
+<footer>Made with <span>❤️</span> just for you · <span>June 11, 2025</span></footer>
+
+<!-- ══════════ LIGHTBOX ══════════ -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox()">
+  <span class="lb-close" onclick="closeLightbox()">✕</span>
+  <img id="lb-img" src="" alt=""/>
+</div>
+
+<script>
+// Open lightbox — reads the src directly from the clicked card's <img>
+function openLightbox(card) {
+  var img = card.querySelector('img');
+  document.getElementById('lb-img').src = img.src;
+  document.getElementById('lightbox').classList.add('open');
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+}
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeLightbox();
+});
+
+// Floating hearts
+var canvas = document.getElementById('hearts-canvas');
+var ctx = canvas.getContext('2d');
+var hearts = [];
+function resize() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+resize();
+window.addEventListener('resize', resize);
+function spawnHeart() {
+  hearts.push({
+    x: Math.random() * canvas.width,
+    y: canvas.height + 20,
+    size: Math.random() * 16 + 7,
+    speed: Math.random() * 1 + 0.4,
+    opacity: Math.random() * 0.4 + 0.15,
+    sway: Math.random() * 2 - 1,
+    angle: 0,
+    color: ['#F7A8BB','#E8748A','#F5A623','#C47BA0','#FF80AB'][Math.floor(Math.random()*5)]
+  });
+}
+function drawHeart(x, y, size, color, alpha) {
+  ctx.save();
+  ctx.globalAlpha = alpha;
+  ctx.fillStyle = color;
+  ctx.beginPath();
+  var s = size / 30;
+  ctx.translate(x, y);
+  ctx.scale(s, s);
+  ctx.moveTo(0, -5);
+  ctx.bezierCurveTo(12, -20, 30, -5, 0, 20);
+  ctx.bezierCurveTo(-30, -5, -12, -20, 0, -5);
+  ctx.fill();
+  ctx.restore();
+}
+function animateHearts() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+  if (Math.random() < 0.07) spawnHeart();
+  hearts = hearts.filter(function(h) { return h.y > -40; });
+  hearts.forEach(function(h) {
+    h.y -= h.speed;
+    h.x += Math.sin(h.angle) * h.sway;
+    h.angle += 0.03;
+    drawHeart(h.x, h.y, h.size, h.color, h.opacity);
+  });
+  requestAnimationFrame(animateHearts);
+}
+animateHearts();
+
+// Scroll reveal
+var observer = new IntersectionObserver(function(entries) {
+  entries.forEach(function(e) {
+    if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+  });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(function(el) { observer.observe(el); });
+</script>
+</body>
+</html>
